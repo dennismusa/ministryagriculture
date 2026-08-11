@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 "use client";
 
 import Link from "next/link";
@@ -19,14 +20,26 @@ import {
   Menu,
 } from "lucide-react";
 
-export default function Sidebar() {
+type SidebarProps = {
+  mobileOpen?: boolean;
+  onClose?: () => void;
+  onMenuClick?: () => void;
+  collapsed?: boolean;
+  onCollapsedChange?: (collapsed: boolean) => void;
+};
+
+export default function Sidebar({
+  mobileOpen = false,
+  onClose = () => {},
+  onMenuClick = () => {},
+  collapsed = false,
+  onCollapsedChange = () => {},
+}: SidebarProps) {
   const pathname = usePathname();
   const router = useRouter();
 
-  const [collapsed, setCollapsed] = useState(false);
   const [reportsOpen, setReportsOpen] = useState(false);
   const [regionsOpen, setRegionsOpen] = useState(false);
-  const [mobileOpen, setMobileOpen] = useState(false);
 
   const menuItems = [
     {
@@ -58,8 +71,8 @@ export default function Sidebar() {
   };
 
   const handleNavigation = () => {
-    setMobileOpen(false);
-  };
+  onClose();
+};
 
   return (
     <>
@@ -67,39 +80,39 @@ export default function Sidebar() {
           MOBILE MENU BUTTON
       ====================================================== */}
       <button
-        type="button"
-        onClick={() => setMobileOpen(true)}
-        aria-label="Open navigation menu"
-        className="
-          fixed
-          top-3
-          left-3
-          z-[60]
-          flex
-          h-10
-          w-10
-          items-center
-          justify-center
-          rounded-xl
-          bg-[#0033cc]
-          text-white
-          shadow-lg
-          md:hidden
-        "
-      >
-        <Menu size={22} />
-      </button>
+  type="button"
+  onClick={onMenuClick}
+  aria-label="Open navigation menu"
+  className="
+    fixed
+    top-3
+    left-3
+    z-60
+    flex
+    h-10
+    w-10
+    items-center
+    justify-center
+    rounded-xl
+    bg-[#0033cc]
+    text-white
+    shadow-lg
+    md:hidden
+  "
+>
+  <Menu size={22} />
+</button>
 
       {/* =====================================================
           MOBILE OVERLAY
       ====================================================== */}
       {mobileOpen && (
         <div
-          onClick={() => setMobileOpen(false)}
+          onClick={onClose}
           className="
             fixed
             inset-0
-            z-[65]
+            z-65
             bg-black/50
             md:hidden
           "
@@ -124,7 +137,7 @@ export default function Sidebar() {
           border-white/10
           shadow-2xl
 
-          bg-gradient-to-b
+          bg-linear-to-b
           from-[#0033cc]
           via-[#3333cc]
           to-[#4444dd]
@@ -133,9 +146,9 @@ export default function Sidebar() {
           duration-300
           ease-in-out
 
-          z-[70]
+          z-70
 
-          w-[280px]
+          w-70
 
           ${
             mobileOpen
@@ -158,7 +171,7 @@ export default function Sidebar() {
         ====================================================== */}
         <button
           type="button"
-          onClick={() => setMobileOpen(false)}
+          onClick={onClose}
           aria-label="Close menu"
           className="
             absolute
@@ -188,7 +201,7 @@ export default function Sidebar() {
         ====================================================== */}
         <button
           type="button"
-          onClick={() => setCollapsed(!collapsed)}
+          onClick={() => onCollapsedChange(!collapsed)}
           aria-label={
             collapsed
               ? "Expand sidebar"

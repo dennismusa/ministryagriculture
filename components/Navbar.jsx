@@ -5,6 +5,8 @@ import { Menu } from "lucide-react";
 
 export default function Navbar({
   onMenuClick = () => {},
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  sidebarCollapsed = false,
 }) {
   const pathname = usePathname();
 

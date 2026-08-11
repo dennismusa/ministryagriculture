@@ -1,8 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import Navbar from "./Navbar";
-import Sidebar from "./Sidebar";
+import Sidebar from "@/components/Sidebar";
+import Navbar from "@/components/Navbar";
 
 export default function DashboardShell({
   children,
@@ -13,12 +13,13 @@ export default function DashboardShell({
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
 
   return (
-    <div className="min-h-screen w-full bg-slate-100">
-
+    <div className="min-h-screen bg-blue-50">
+      
       {/* SIDEBAR */}
       <Sidebar
         mobileOpen={mobileMenuOpen}
         onClose={() => setMobileMenuOpen(false)}
+        onMenuClick={() => setMobileMenuOpen(true)}
         collapsed={sidebarCollapsed}
         onCollapsedChange={setSidebarCollapsed}
       />
@@ -26,24 +27,20 @@ export default function DashboardShell({
       {/* NAVBAR */}
       <Navbar
         onMenuClick={() => setMobileMenuOpen(true)}
-        sidebarCollapsed={sidebarCollapsed}
       />
 
       {/* MAIN CONTENT */}
       <main
         className={`
           min-h-screen
-          w-full
           pt-16
-
           transition-all
           duration-300
-          ease-in-out
 
           ${
             sidebarCollapsed
-              ? "md:ml-24 md:w-[calc(100%-6rem)]"
-              : "md:ml-72 md:w-[calc(100%-18rem)]"
+              ? "md:ml-24"
+              : "md:ml-72"
           }
         `}
       >
