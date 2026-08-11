@@ -1,7 +1,7 @@
 "use client";
 
 import { MapPinned, Search } from "lucide-react";
-import Sidebar from "@/components/Sidebar";
+
 
 export default function RegionsPage() {
   const regions = [
@@ -14,7 +14,7 @@ export default function RegionsPage() {
   return (
     <div className="min-h-screen bg-slate-100">
       {/* SIDEBAR */}
-      <Sidebar />
+      
 
       {/* MAIN CONTENT */}
       <main
@@ -125,7 +125,7 @@ export default function RegionsPage() {
                   text-lg
                   sm:text-xl
                   text-slate-800
-                  break-words
+                  wrap-break-word
                 "
               >
                 {region.county}

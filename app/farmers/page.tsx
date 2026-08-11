@@ -1,7 +1,3 @@
-
-"use client";
-
-import Sidebar from "@/components/Sidebar";
 import FarmersTable from "@/components/FarmersTable";
 import {
   Users,
@@ -14,10 +10,6 @@ export default function FarmersPage() {
   return (
     <div className="min-h-screen bg-slate-50">
 
-      {/* SIDEBAR */}
-      <Sidebar />
-
-      {/* MAIN CONTENT */}
       <main
         className="
           relative
@@ -25,8 +17,7 @@ export default function FarmersPage() {
           min-h-screen
           w-full
           md:ml-72
-          pt-28
-          md:pt-24
+          pt-20
           px-3
           sm:px-4
           md:px-6
@@ -78,13 +69,10 @@ export default function FarmersPage() {
 
           </div>
 
-
           {/* ================= SUMMARY CARDS ================= */}
           <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-3 sm:gap-5">
 
-            {/* TOTAL FARMERS */}
             <div className="bg-white rounded-2xl border shadow-sm p-4 sm:p-5">
-
               <p className="text-slate-500 text-xs sm:text-sm">
                 Total Farmers
               </p>
@@ -94,7 +82,6 @@ export default function FarmersPage() {
               </h2>
 
               <div className="flex items-center justify-between mt-2">
-
                 <span className="text-green-600 text-xs sm:text-sm">
                   Active records
                 </span>
@@ -103,15 +90,10 @@ export default function FarmersPage() {
                   size={22}
                   className="text-green-700 sm:w-6 sm:h-6"
                 />
-
               </div>
-
             </div>
 
-
-            {/* NEW THIS MONTH */}
             <div className="bg-white rounded-2xl border shadow-sm p-4 sm:p-5">
-
               <p className="text-slate-500 text-xs sm:text-sm">
                 New This Month
               </p>
@@ -123,11 +105,8 @@ export default function FarmersPage() {
               <p className="text-green-600 text-xs sm:text-sm mt-1">
                 +12% Growth
               </p>
-
             </div>
 
-
-            {/* COUNTIES COVERED */}
             <div
               className="
                 bg-white
@@ -140,7 +119,6 @@ export default function FarmersPage() {
                 xl:col-span-1
               "
             >
-
               <p className="text-slate-500 text-xs sm:text-sm">
                 Counties Covered
               </p>
@@ -152,7 +130,6 @@ export default function FarmersPage() {
               <p className="text-green-600 text-xs sm:text-sm mt-1">
                 National Coverage
               </p>
-
             </div>
 
           </div>
@@ -293,7 +270,7 @@ export default function FarmersPage() {
             {/* TABLE */}
             <div className="w-full overflow-x-auto">
 
-              <div className="min-w-[650px]">
+              <div className="min-w-162.5">
                 <FarmersTable />
               </div>
 

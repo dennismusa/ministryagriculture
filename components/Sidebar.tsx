@@ -1,9 +1,8 @@
-/* eslint-disable @next/next/no-img-element */
 "use client";
 
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import {
   LayoutDashboard,
@@ -17,29 +16,46 @@ import {
   ChevronDown,
   Map,
   X,
-  Menu,
 } from "lucide-react";
 
-type SidebarProps = {
-  mobileOpen?: boolean;
-  onClose?: () => void;
-  onMenuClick?: () => void;
-  collapsed?: boolean;
-  onCollapsedChange?: (collapsed: boolean) => void;
-};
-
-export default function Sidebar({
-  mobileOpen = false,
-  onClose = () => {},
-  onMenuClick = () => {},
-  collapsed = false,
-  onCollapsedChange = () => {},
-}: SidebarProps) {
+export default function Sidebar() {
   const pathname = usePathname();
   const router = useRouter();
 
+  const [collapsed, setCollapsed] = useState(false);
+  const [mobileOpen, setMobileOpen] = useState(false);
   const [reportsOpen, setReportsOpen] = useState(false);
   const [regionsOpen, setRegionsOpen] = useState(false);
+
+  /* =====================================================
+     LISTEN FOR MOBILE MENU EVENT FROM NAVBAR
+  ====================================================== */
+  useEffect(() => {
+    const openSidebar = () => {
+      setMobileOpen(true);
+    };
+
+    window.addEventListener("open-mobile-sidebar", openSidebar);
+
+    return () => {
+      window.removeEventListener(
+        "open-mobile-sidebar",
+        openSidebar
+      );
+    };
+  }, []);
+
+  /* =====================================================
+     CLOSE SIDEBAR WHEN NAVIGATING
+  ====================================================== */
+  useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    setMobileOpen(false);
+  }, [pathname]);
+
+  const closeMobileSidebar = () => {
+    setMobileOpen(false);
+  };
 
   const menuItems = [
     {
@@ -70,50 +86,19 @@ export default function Sidebar({
     router.push("/login");
   };
 
-  const handleNavigation = () => {
-  onClose();
-};
-
   return (
     <>
-      {/* =====================================================
-          MOBILE MENU BUTTON
-      ====================================================== */}
-      <button
-  type="button"
-  onClick={onMenuClick}
-  aria-label="Open navigation menu"
-  className="
-    fixed
-    top-3
-    left-3
-    z-60
-    flex
-    h-10
-    w-10
-    items-center
-    justify-center
-    rounded-xl
-    bg-[#0033cc]
-    text-white
-    shadow-lg
-    md:hidden
-  "
->
-  <Menu size={22} />
-</button>
-
       {/* =====================================================
           MOBILE OVERLAY
       ====================================================== */}
       {mobileOpen && (
         <div
-          onClick={onClose}
+          onClick={closeMobileSidebar}
           className="
             fixed
             inset-0
-            z-65
             bg-black/50
+            z-[90]
             md:hidden
           "
         />
@@ -125,30 +110,32 @@ export default function Sidebar({
       <aside
         className={`
           fixed
-          left-0
           top-0
+          left-0
           bottom-0
+
+          z-[100]
 
           flex
           flex-col
 
           text-white
-          border-r
-          border-white/10
-          shadow-2xl
 
-          bg-linear-to-b
+          bg-gradient-to-b
           from-[#0033cc]
           via-[#3333cc]
           to-[#4444dd]
 
-          transition-all
+          border-r
+          border-white/10
+
+          shadow-2xl
+
+          transition-transform
           duration-300
           ease-in-out
 
-          z-70
-
-          w-70
+          w-[280px]
 
           ${
             mobileOpen
@@ -171,22 +158,24 @@ export default function Sidebar({
         ====================================================== */}
         <button
           type="button"
-          onClick={onClose}
-          aria-label="Close menu"
+          onClick={closeMobileSidebar}
+          aria-label="Close sidebar"
           className="
             absolute
             right-4
-            top-5
+            top-4
 
-            flex
-            h-10
             w-10
-            items-center
-            justify-center
+            h-10
 
             rounded-xl
+
             bg-white/10
             hover:bg-white/20
+
+            flex
+            items-center
+            justify-center
 
             transition
 
@@ -201,7 +190,7 @@ export default function Sidebar({
         ====================================================== */}
         <button
           type="button"
-          onClick={() => onCollapsedChange(!collapsed)}
+          onClick={() => setCollapsed(!collapsed)}
           aria-label={
             collapsed
               ? "Expand sidebar"
@@ -212,15 +201,17 @@ export default function Sidebar({
             md:flex
 
             absolute
+
             -right-4
             top-8
 
-            h-8
             w-8
+            h-8
 
             rounded-full
 
             bg-white
+
             text-blue-700
 
             items-center
@@ -232,7 +223,7 @@ export default function Sidebar({
 
             transition
 
-            z-50
+            z-[110]
           "
         >
           {collapsed ? (
@@ -246,18 +237,24 @@ export default function Sidebar({
             HEADER
         ====================================================== */}
         <div
-          className="
+          className={`
             h-20
             shrink-0
 
             border-b
             border-white/10
 
-            px-5
-
             flex
             items-center
-          "
+
+            px-5
+
+            ${
+              collapsed
+                ? "md:justify-center"
+                : ""
+            }
+          `}
         >
 
           {/* LOGO */}
@@ -268,9 +265,9 @@ export default function Sidebar({
 
               rounded-xl
 
-              overflow-hidden
-
               bg-white
+
+              overflow-hidden
 
               flex
               items-center
@@ -313,11 +310,10 @@ export default function Sidebar({
               National Farm System
             </p>
           </div>
-
         </div>
 
         {/* =====================================================
-            MAIN SIDEBAR CONTENT
+            CONTENT
         ====================================================== */}
         <div
           className="
@@ -325,17 +321,16 @@ export default function Sidebar({
             overflow-y-auto
 
             p-4
-
-            scrollbar-thin
           "
         >
 
-          {/* NAVIGATION TITLE */}
+          {/* TITLE */}
           <p
             className={`
               uppercase
               text-xs
               tracking-[3px]
+
               text-white/50
 
               mb-4
@@ -353,7 +348,9 @@ export default function Sidebar({
 
           <nav className="space-y-2">
 
-            {/* MAIN MENU */}
+            {/* =================================================
+                MAIN MENU
+            ================================================= */}
             {menuItems.map((item) => {
               const Icon = item.icon;
 
@@ -367,7 +364,6 @@ export default function Sidebar({
                 <Link
                   key={item.href}
                   href={item.href}
-                  onClick={handleNavigation}
                   className={`
                     relative
 
@@ -395,7 +391,6 @@ export default function Sidebar({
                   `}
                 >
 
-                  {/* ACTIVE BAR */}
                   {active && (
                     <div
                       className="
@@ -439,7 +434,7 @@ export default function Sidebar({
 
             {/* =================================================
                 REGIONS
-            ================================================== */}
+            ================================================= */}
             <div>
 
               <button
@@ -532,7 +527,6 @@ export default function Sidebar({
 
                   <Link
                     href="/regions/counties"
-                    onClick={handleNavigation}
                     className="
                       block
                       text-sm
@@ -547,7 +541,6 @@ export default function Sidebar({
 
                   <Link
                     href="/regions/wards"
-                    onClick={handleNavigation}
                     className="
                       block
                       text-sm
@@ -567,7 +560,7 @@ export default function Sidebar({
 
             {/* =================================================
                 REPORTS
-            ================================================== */}
+            ================================================= */}
             <div>
 
               <button
@@ -659,8 +652,7 @@ export default function Sidebar({
                 >
 
                   <Link
-                    href="/reportsfile/farmers"
-                    onClick={handleNavigation}
+                    href="/reports/farmers"
                     className="
                       block
                       text-sm
@@ -674,8 +666,7 @@ export default function Sidebar({
                   </Link>
 
                   <Link
-                    href="/reportsfile/farms"
-                    onClick={handleNavigation}
+                    href="/reports/farms"
                     className="
                       block
                       text-sm
@@ -697,7 +688,7 @@ export default function Sidebar({
 
           {/* =================================================
               LIVE ANALYTICS
-          ================================================== */}
+          ================================================= */}
           <div
             className={`
               mt-8
@@ -729,7 +720,9 @@ export default function Sidebar({
               className="
                 rounded-3xl
                 p-5
+
                 bg-white/10
+
                 border
                 border-white/10
               "
@@ -759,21 +752,17 @@ export default function Sidebar({
         <div
           className="
             p-4
-
             border-t
             border-white/10
-
             shrink-0
           "
         >
 
-          {/* USER */}
           <div
             className={`
               flex
               items-center
               gap-3
-
               mb-4
 
               ${
@@ -799,7 +788,6 @@ export default function Sidebar({
                 justify-center
 
                 font-bold
-
                 shrink-0
               "
             >
@@ -820,7 +808,6 @@ export default function Sidebar({
 
           </div>
 
-          {/* LOGOUT */}
           <button
             type="button"
             onClick={handleLogout}
@@ -838,17 +825,11 @@ export default function Sidebar({
 
               bg-red-700
 
-              border
-              border-red-700
-
               text-white
 
-              transition-all
-              duration-300
+              transition
 
               hover:bg-red-900
-              hover:shadow-red-500/50
-              hover:shadow-2xl
 
               active:scale-95
 
@@ -863,8 +844,7 @@ export default function Sidebar({
             <LogOut
               size={20}
               className="
-                transition-all
-                duration-300
+                transition
 
                 group-hover:-rotate-12
                 group-hover:scale-110

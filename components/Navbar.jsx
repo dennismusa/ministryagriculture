@@ -3,11 +3,7 @@
 import { usePathname } from "next/navigation";
 import { Menu } from "lucide-react";
 
-export default function Navbar({
-  onMenuClick = () => {},
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  sidebarCollapsed = false,
-}) {
+export default function Navbar() {
   const pathname = usePathname();
 
   const hideNavbar =
@@ -17,6 +13,12 @@ export default function Navbar({
   if (hideNavbar) {
     return null;
   }
+
+  const openSidebar = () => {
+    window.dispatchEvent(
+      new Event("open-mobile-sidebar")
+    );
+  };
 
   return (
     <header
@@ -34,7 +36,7 @@ export default function Navbar({
 
         shadow-md
 
-        z-40
+        z-[80]
 
         flex
         items-center
@@ -47,15 +49,15 @@ export default function Navbar({
     >
 
       {/* =====================================================
-          LEFT SIDE
+          LEFT
       ====================================================== */}
       <div className="flex items-center gap-3">
 
         {/* MOBILE MENU */}
         <button
           type="button"
-          onClick={onMenuClick}
-          aria-label="Open menu"
+          onClick={openSidebar}
+          aria-label="Open sidebar"
           className="
             md:hidden
 
@@ -76,6 +78,8 @@ export default function Navbar({
 
             hover:bg-blue-50
 
+            active:scale-95
+
             transition
           "
         >
@@ -83,15 +87,12 @@ export default function Navbar({
         </button>
 
         {/* BRAND */}
-        <div className="flex items-center gap-2 sm:gap-3">
+        <div className="flex items-center gap-2">
 
           <div
             className="
               w-9
               h-9
-
-              sm:w-10
-              sm:h-10
 
               rounded-xl
 
@@ -104,9 +105,6 @@ export default function Navbar({
               justify-center
 
               font-bold
-
-              text-base
-              sm:text-lg
 
               shadow
             "
@@ -132,19 +130,10 @@ export default function Navbar({
       </div>
 
       {/* =====================================================
-          USER AREA
+          RIGHT
       ====================================================== */}
-      <div
-        className="
-          flex
-          items-center
+      <div className="flex items-center gap-3">
 
-          gap-2
-          sm:gap-5
-        "
-      >
-
-        {/* SYSTEM NAME */}
         <span
           className="
             hidden
@@ -159,7 +148,6 @@ export default function Navbar({
           Agriculture MIS
         </span>
 
-        {/* USER */}
         <div
           className="
             w-9

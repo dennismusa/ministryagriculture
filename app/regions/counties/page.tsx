@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 
-import Sidebar from "@/components/Sidebar";
+
 import StatCard from "@/components/StatCard";
 
 import {
@@ -31,7 +31,7 @@ export default function CountiesPage() {
 
   return (
     <div className="min-h-screen bg-slate-100">
-      <Sidebar />
+      
 
       {/* MAIN CONTENT */}
       <main
@@ -552,7 +552,7 @@ export default function CountiesPage() {
                                         <div className="w-full overflow-x-auto">
                                           <table
                                             className="
-                                              min-w-[650px]
+                                              min-w-162.5
                                               w-full
                                               border
                                               rounded-xl

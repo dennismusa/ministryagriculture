@@ -1,6 +1,6 @@
 "use client";
 
-import Sidebar from "@/components/Sidebar";
+
 import {
   Tractor,
   MapPinned,
@@ -14,7 +14,7 @@ export default function FarmsPage() {
     <div className="min-h-screen bg-slate-50">
 
       {/* SIDEBAR */}
-      <Sidebar />
+      
 
       {/* MAIN CONTENT */}
       <main
@@ -331,7 +331,7 @@ export default function FarmsPage() {
             {/* TABLE SCROLL ON MOBILE */}
             <div className="w-full overflow-x-auto">
 
-              <table className="min-w-[850px] w-full text-sm">
+              <table className="min-w-212.5 w-full text-sm">
 
                 <thead>
                   <tr className="text-left border-b text-slate-600">

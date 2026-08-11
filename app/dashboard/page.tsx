@@ -18,7 +18,20 @@ export default function Dashboard() {
       <Sidebar />
 
       {/* MAIN */}
-      <main className="ml-72 flex-1 p-6 space-y-6">
+      <main
+  className="
+    w-full
+    min-w-0
+    flex-1
+    p-3
+    sm:p-4
+    md:p-6
+    space-y-6
+    md:ml-72
+    pt-20
+    md:pt-6
+  "
+>
 
         {/* ================= HEADER ================= */}
         <div className="bg-white rounded-xl shadow-sm border p-5">

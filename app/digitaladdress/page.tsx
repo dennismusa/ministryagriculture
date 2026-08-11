@@ -1,7 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import Sidebar from "@/components/Sidebar";
+//import Sidebar from "@/components/Sidebar";
 import {  Search,  Plus,  Phone,  User,  MapPin,  Home,  Tractor,  CheckCircle,  Clock,} from "lucide-react";
 
 export default function DigitalAddressPage() {
@@ -100,9 +100,10 @@ export default function DigitalAddressPage() {
 
   return (
     <div className="flex bg-slate-50 min-h-screen">
-      <Sidebar />
+ 
 
-      <main className="ml-72 flex-1 p-8 space-y-6">
+      <main
+  className="  w-full  min-w-0 flex-1 p-3 sm:p-4 md:p-6 space-y-6 md:ml-72 pt-20 md:pt-6  ">
 
         {/* Header */}
 

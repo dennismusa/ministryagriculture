@@ -17,22 +17,7 @@ export default function ReportsPage() {
 
       {/* MAIN CONTENT */}
       <main
-        className="
-          w-full
-          min-w-0
-          ml-0
-          md:ml-72
-          pt-20
-          md:pt-24
-          px-3
-          sm:px-4
-          md:px-6
-          lg:px-8
-          pb-8
-          space-y-5
-          md:space-y-6
-        "
-      >
+        className=" w-full  min-w-0  ml-0 md:ml-72 pt-20   md:pt-24 px-3 sm:px-4 md:px-6 lg:px-8  pb-8  space-y-5 md:space-y-6 "  >
         {/* HEADER */}
         <div className="bg-white border border-blue-100 shadow-sm rounded-2xl p-4 sm:p-6">
           <h1 className="text-2xl sm:text-3xl font-bold text-blue-900">
