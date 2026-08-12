@@ -103,7 +103,25 @@ export default function DigitalAddressPage() {
  
 
       <main
-  className="  w-full  min-w-0 flex-1 p-3 sm:p-4 md:p-6 space-y-6 md:ml-72 pt-20 md:pt-6  ">
+   className="
+    w-full
+    min-w-0
+    flex-1
+
+    md:ml-72
+
+    px-3
+    sm:px-4
+    md:px-6
+
+    pt-20
+    md:pt-20
+
+    pb-8
+
+    space-y-6
+  "
+>
 
         {/* Header */}
 
